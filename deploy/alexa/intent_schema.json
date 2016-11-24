@@ -1,0 +1,38 @@
+{
+  "intents": [{
+    "intent": "pingDevice",
+    "slots": [{
+      "name": "Device",
+      "type": "LIST_OF_DEVICE_NAMES"
+    }, {
+      "name": "FirstNames",
+      "type": "AMAZON.US_FIRST_NAME"
+    }]
+  }, {
+    "intent": "addReminder",
+    "slots": [{
+      "name": "TimeDue",
+      "type": "AMAZON.TIME"
+    }, {
+      "name": "DueDate",
+      "type": "AMAZON.DATE"
+    }, {
+      "name": "FirstNames",
+      "type": "AMAZON.US_FIRST_NAME"
+    }, {
+      "name": "Reminder",
+      "type": "LIST_OF_REMINDERS"
+
+    }]
+  }, {
+    "intent": "AMAZON.HelpIntent"
+  },
+    {
+      "intent": "AMAZON.CancelIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    }
+
+  ]
+}

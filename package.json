@@ -1,0 +1,58 @@
+{
+
+  "name": "alexa-icloudtools",
+  "version": "1.0.0",
+  "description": "A module to simplify creation of Alexa (Amazon Echo) apps (Skills) using Node.js",
+  "author": {
+    "name": "Erik Kellener",
+    "email": "erik@kellener.com",
+    "url": "http://www.kellener.com"
+  },
+  "config": {
+    "awsRegion": "us-east-1",
+    "claudiaConfig": "./deploy/claudia/claudia.json"
+  },
+  "private": true,
+  "scripts": {
+    "preinstall": "npm --prefix lib/appledevice install lib/appledevice; npm --prefix lib/credentials install lib/credentials; npm --prefix lib/icloudtools install lib/icloudtools",
+    "claudia-create": "./bin/cleanclaudia.sh; ./node_modules/.bin/claudia create --keep --name $npm_package_name  --timeout 20 --version dev --region $npm_package_config_awsRegion --handler lambda-icloudtools.handler  --config $npm_package_config_claudiaConfig --policies ./deploy/claudia/policies",
+    "claudia-update": "./node_modules/.bin/claudia update --version dev --config $npm_package_config_claudiaConfig",
+    "claudia-destroy": "./node_modules/.bin/claudia destroy --version dev --config $npm_package_config_claudiaConfig && rm $npm_package_config_claudiaConfig",
+    "claudia-test-pingDevice": "./node_modules/.bin/claudia test-lambda --config $npm_package_config_claudiaConfig --event test/fixtures/alexa-event-pingDevice.json",
+    "claudia-test-addReminder": "./node_modules/.bin/claudia test-lambda --config $npm_package_config_claudiaConfig --event test/fixtures/alexa-event-addReminder.json",
+    "claudia-test": "./node_modules/.bin/claudia test-lambda --config $npm_package_config_claudiaConfig --event ",
+    "test": "NODE_ENV=dev ./node_modules/.bin/nyc ./node_modules/.bin/_mocha ./test",
+    "watch": "npm run watch-appledevice & npm run watch-credentials & npm run watch-icloudtools",
+    "watch-appledevice": "./node_modules/.bin/watch 'npm install icloudtools' lib/appledevice/",
+    "watch-icloudtools": "./node_modules/.bin/watch 'npm install icloudtools' lib/icloudtools/",
+    "watch-credentials": "./node_modules/.bin/watch 'npm install icloudtools' lib/credentials/",
+    "coverage": "NODE_ENV=dev ./node_modules/.bin/istanbul cover --report html node_modules/.bin/_mocha -- -R spec test"
+  },
+  "dependencies": {
+    "alexa-app": "^2.3.4",
+    "icloudtools": "file:./lib/icloudtools",
+    "aws-sdk": "*",
+    "bluebird": "^3.4.6",
+    "config-node": "^1.3.0",
+    "debug": "~2.2.0",
+    "express": "~4.13.4",
+    "fs": "0.0.1-security",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "aws-lambda-mock-context": "^3.0.0",
+    "mock-alexa-request": "file:./lib/mock-alexa-request",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
+    "claudia": "^2.1.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.2",
+    "nyc": "^8.4.0",
+    "rewire": "^2.5.2",
+    "sinon": "^1.17.6",
+    "sinon-chai": "^2.8.0",
+    "watch": "^0.19.2",
+    "find-apple-device": "^1.0.0",
+    "json": "^9.0.4"
+  }
+}

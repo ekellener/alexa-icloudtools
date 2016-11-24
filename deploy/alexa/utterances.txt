@@ -1,0 +1,38 @@
+pingDevice where is {FirstNames} {Device}
+pingDevice find {FirstNames} {Device}
+pingDevice notify {FirstNames} {Device}
+pingDevice I lost {FirstNames} {Device}
+pingDevice Help me find {FirstNames} {Device}
+pingDevice Send an alert to {FirstNames} {Device}
+
+addReminder Remind {FirstNames} to {Reminder} at {TimeDue}
+addReminder Ask {FirstNames} to {Reminder} at {TimeDue}
+addReminder Tell {FirstNames} to {Reminder} at {TimeDue}
+addReminder Add {Reminder} to {FirstNames} list at {TimeDue}
+addReminder Insert {Reminder} to {FirstNames} list at {TimeDue}
+
+addReminder Remind {FirstNames} to {Reminder}
+addReminder Ask {FirstNames} to {Reminder}
+addReminder Tell {FirstNames} to {Reminder}
+addReminder Add {Reminder} to {FirstNames} list
+addReminder Insert {Reminder} to {FirstNames} list
+
+addReminder Remind {FirstNames} to {Reminder} on {DueDate}
+addReminder Ask {FirstNames} to {Reminder}  on {DueDate}
+addReminder Tell {FirstNames} to {Reminder}  on {DueDate}
+addReminder Add {Reminder} to {FirstNames} list  for {DueDate}
+addReminder Insert {Reminder} to {FirstNames} list  for {DueDate}
+
+addReminder Remind {FirstNames} to {Reminder} {DueDate}
+addReminder Ask {FirstNames} to {Reminder} {DueDate}
+addReminder Tell {FirstNames} to {Reminder} {DueDate}
+addReminder Add {Reminder} to {FirstNames} list for {DueDate}
+addReminder Insert {Reminder} to {FirstNames} list for {DueDate}
+
+
+addReminder Remind {FirstNames} to {Reminder}  on {DueDate} at {TimeDue}
+addReminder Ask {FirstNames} to {Reminder}  on {DueDate} at {TimeDue}
+addReminder Tell {FirstNames} to {Reminder}  on {DueDate} at {TimeDue}
+addReminder Add {Reminder} to {FirstNames} list  for {DueDate} at {TimeDue}
+addReminder Insert {Reminder} to {FirstNames} list for {DueDate} at {TimeDue}
+

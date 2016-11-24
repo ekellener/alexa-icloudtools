@@ -1,0 +1,20 @@
+FROM node:4.4.7
+#docker build   -f Dockerfile.awslambda -t alexa/awslambda .
+
+RUN useradd --user-group --create-home --shell /bin/false app &&\
+  npm install --global npm@2.15.8
+
+# Install dependencies
+RUN apt-get update
+
+## Added python-dev (some wierd error)
+RUN apt-get install -y curl python python-dev python-pip
+USER app
+
+#Prereq
+RUN pip install awscli
+ENV HOME=/home/app
+WORKDIR $HOME
+USER root
+RUN mkdir -p /home/app/lambda
+RUN chown app:app /home/app/lambda

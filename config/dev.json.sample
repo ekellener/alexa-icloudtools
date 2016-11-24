@@ -1,0 +1,83 @@
+{
+  "ICloud": {
+    "credentialStore": {
+      "adapter": "kmsCredentials",
+      "params": {
+        "awsRegion": "us-east-1",
+        "encryptedFile": "config/creds.base64"
+      }
+    },
+    "clientCookiesFile": "/tmp/cookies.json",
+    "defaultCollectionName": "Reminders"
+  },
+  "deviceAlert": {
+    "message": "Lost your device again?"
+  },
+  "Alexa": {
+    "introMessage": "Welcome to the iCloud bridge.",
+    "helpMessage": "You can say things like find Bill's Phone, or say things like  Remind Bill to pick up the milk. Now what can I help you with?",
+    "stopMessage": "ok",
+    "cancelMessage": "Cancelled",
+    "interactionModel": {
+      "intents": [
+        {
+          "intent": "pingDevice",
+          "slots": [
+            {
+              "name": "Device",
+              "type": "LIST_OF_DEVICE_NAMES"
+            },
+            {
+              "name": "FirstNames",
+              "type": "AMAZON.US_FIRST_NAME"
+            }
+          ]
+        },
+        {
+          "intent": "addReminder",
+          "slots": [
+            {
+              "name": "TimeDue",
+              "type": "AMAZON.TIME"
+            },
+            {
+              "name": "DueDate",
+              "type": "AMAZON.DATE"
+            },
+            {
+              "name": "FirstNames",
+              "type": "AMAZON.US_FIRST_NAME"
+            },
+            {
+              "name": "Reminder",
+              "type": "LIST_OF_REMINDERS"
+            }
+          ]
+        },
+        {
+          "intent": "AMAZON.HelpIntent"
+        },
+        {
+          "intent": "AMAZON.CancelIntent"
+        },
+        {
+          "intent": "AMAZON.StopIntent"
+        }
+      ],
+      "utteranceTemplate": [
+        {
+          "intent": "PingDevice",
+          "template": "{where is |notify |i lost|help me find|find |send an alert to} {-|FirstNames} {-|Device}"
+        },
+        {
+          "intent": "addReminder",
+          "template": "{remind|ask|tell} {-|FirstNames} to {-|Reminder}"
+        },
+        {
+          "intent": "addReminder",
+          "template": "{add|insert} {-|Reminder} to {-|FirstNames} list"
+        }
+      ]
+    }
+  }
+}

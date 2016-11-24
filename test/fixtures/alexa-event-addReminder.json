@@ -1,0 +1,39 @@
+{
+  "session": {
+    "sessionId": "SessionId.072eefd6",
+    "application": {
+      "applicationId": "amzn1.ask.skill.5bc45418"
+    },
+    "attributes": {},
+    "user": {
+      "userId": "amzn1.ask.account.INKGD"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.-3ba2",
+    "locale": "en-US",
+    "timestamp": "2016-10-13T01:52:27Z",
+    "intent": {
+      "name": "addReminder",
+      "slots": {
+        "TimeDue": {
+          "name": "TimeDue"
+        },
+        "Reminder": {
+          "name": "Reminder",
+          "value": "pick up the groceries"
+        },
+        "DueDate": {
+          "name": "DueDate"
+        },
+        "FirstNames": {
+          "name": "FirstNames",
+          "value": "Erik"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

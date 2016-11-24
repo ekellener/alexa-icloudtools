@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  lambda:
+     env_file: .env
+     build:
+      context: .
+      args:
+        dev_test_user: "${dev_test_user}"
+        dev_test_device: "${dev_test_device}"
+        git_repo: "${git_repo}"
+        AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+        AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+        AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}"
+
+#volumes:
+#       - .:/home/app/lambda
