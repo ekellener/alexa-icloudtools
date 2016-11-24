@@ -13,8 +13,6 @@ ENV HOME=/home/app
 USER app
 WORKDIR $HOME/lambda/alexa-icloudtools
 
-RUN npm test
-
 #add any changes from repo
 RUN git pull
 
@@ -28,10 +26,14 @@ WORKDIR $HOME/lambda/alexa-icloudtools/bin
 RUN ./setupkms.sh
 WORKDIR $HOME/lambda/alexa-icloudtools/config
 COPY config/creds.dcr $HOME/lambda/alexa-icloudtools/config
+COPY config/dev.json $HOME/lambda/alexa-icloudtools/config
+USER root
+RUN chown app:app  $HOME/lambda/alexa-icloudtools/config/*
+User app
 RUN aws kms encrypt --key-id alias/alexa-icloud-kms --plaintext fileb://creds.dcr --output text --query CiphertextBlob | base64 --decode > creds.base64
-
 #Deploy lambda via Claudia
 WORKDIR $HOME/lambda/alexa-icloudtools
+RUN npm test
 RUN npm run claudia-create
 
 #Run a full loop test pingDevice. Temp replace existing fixture w/ accurate test data

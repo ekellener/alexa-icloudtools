@@ -13,8 +13,8 @@ USER app
 WORKDIR $HOME
 # when using auth'd git; once public, can remove .ssh stmts
 RUN mkdir .ssh
-COPY ./config/ssh /home/app/.ssh
-RUN chown -R app:app /home/app/.ssh
+#COPY ./config/ssh /home/app/.ssh
+#RUN chown -R app:app /home/app/.ssh
 RUN echo "**** Pulling down recent repo"
 RUN git clone $git_repo /home/app/lambda/alexa-icloudtools
 WORKDIR $HOME/lambda/alexa-icloudtools

@@ -270,8 +270,8 @@ describe("Amazon Alexa/Echo Tests", function () {
         });
 
     });
-
-    describe("Full Integration loop test PingDevice ", function () {
+    // LIVE TEST - Disabled by default, unless you want an actual live test to ping your device each time.
+    describe.skip("Full Integration loop test PingDevice ", function () {
         this.timeout(15000);
      var lambda = require('../lambda-icloudtools');
 
