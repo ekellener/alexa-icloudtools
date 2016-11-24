@@ -2,7 +2,7 @@ FROM ekellener/awslambda
 
 #VOLUME /home/app
 
-# docker build --build-arg git_repo=https://github.com/ekellener/alexa-icloudtools.git  -f Dockerfile.alexa-icloudtools-appbuild -t ekellener/alexa-icloudtools-appbuild --no-cache .
+# docker build --build-arg git_repo=https://github.com/ekellener/alexa-icloudtools.git  -f reference-files/Dockerfile.alexa-icloudtools-appbuild -t ekellener/alexa-icloudtools-appbuild --no-cache .
 
 # prereq
 ARG git_repo
