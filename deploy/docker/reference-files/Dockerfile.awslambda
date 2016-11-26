@@ -1,5 +1,5 @@
 FROM node:4.4.7
-#docker build   -f Dockerfile.awslambda -t alexa/awslambda .
+#rebuild: docker build   -f Dockerfile.awslambda -t alexa/awslambda .
 
 RUN useradd --user-group --create-home --shell /bin/false app &&\
   npm install --global npm@2.15.8
