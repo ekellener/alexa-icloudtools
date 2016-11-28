@@ -1,3 +1,22 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [iCloud Tools for Alexa](#icloud-tools-for-alexa)
+    - [Step 1 - Prerequisites](#step-1---prerequisites)
+    - [Step 2 - Initial install](#step-2---initial-install)
+    - [Step 3 - Configure](#step-3---configure)
+      - [Alexa and iCloud (Naming conventions)](#alexa-and-icloud-naming-conventions)
+    - [Step 4 - Deploy](#step-4---deploy)
+    - [Step 5 - Set up Alexa Function](#step-5---set-up-alexa-function)
+        - [Skill Information](#skill-information)
+        - [Interaction Model](#interaction-model)
+        - [Configuration](#configuration)
+        - [Test](#test)
+    - [Quick Start](#quick-start)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # iCloud Tools for Alexa
 This Alexa app is designed to automate a series of tasks that leverage Apple's iCloud services
 
@@ -15,9 +34,6 @@ Key dependencies:
 * Mocha, Sinon and Chai for unit and integration tests
 * Docker for deployment testing
 * AWS SDK and CLI
-
-
-## Setup and Installation
 
 
 ### Step 1 - Prerequisites
@@ -185,7 +201,7 @@ aws kms decrypt --ciphertext-blob fileb://config/creds.base64 --output text --qu
 Now that you have updated the config file and have created an encrypted version of the iCloud credential, you're ready to to deploy.
 
 
-###Step 4 - Deploy
+### Step 4 - Deploy
 Deployment uses [Claudia](https://claudiajs.com/). There's already a npm wrapper available. Just enter ```npm run claudia-create```
 This only needs to be done once..Subsequent deploys use ```npm run claudia-update```
 
@@ -210,7 +226,7 @@ saving configuration
 That's it. You can check in the AWS console under lambda functions to find the alexa-icloudtools function.
 
 
-###Step 5 - Set up Alexa Function
+### Step 5 - Set up Alexa Function
 
 Now that the lambda function has been deployed, the Alexa skill needs to be set up through the developer console.
 
@@ -218,30 +234,30 @@ Now that the lambda function has been deployed, the Alexa skill needs to be set 
 2. Alexa -> Alexa Skill Kit->Add a New Skill
 3. Create a New Skill
 
-#####Skill Information
+##### Skill Information
 1. Skill Type: Custom Interaction Model
 2. Name: <Pick a name>
 3. Invocation Name: <Pick an invocation name>  -> Next
 
-#####Interaction Model
+##### Interaction Model
 1. Intent Schema (paste from ```/deploy/alexa/intent_schema.json```)
 2. Add LIST_OF_DEVICES as a Custom Slot Type ->(paste from ```/deploy/alexa/custom_slot_type_LIST_OF_DEVICES```
 3. Add LIST_OF_REMINDERS as a Custom Slot Type ->(PASTE FROM ```/deploy/alexa/custom_slot_type_LIST_OF_REMINDERS```
 4. Utterances (paste from ```/deploy/alexa/utterances.txt```)
 
-#####Configuration
+##### Configuration
 1. Service Endpoint Type -> AWS Lambda ARN(Amazon Resource Name) (e.g. Lambda function)
 2. Enter the ARN. The ARN is the id for the lambda function deployed through claudia. The ARN can be retrieved through this command:
 ```aws lambda list-functions --query 'Functions[?FunctionName==`alexa-icloudtools`].FunctionArn'```
 
-#####Test
+##### Test
 * Try it out... Service Simulator -> Text  - "Find <your user key's name> <device>'" (e.g. Find Willy's phone').
 * If all works out, you should get an alert to your device.
 
 
 
 
-###Quick Start
+### Quick Start
 If you have Docker set up and want to spin up a full environment, including encrypted iCloud logins, follow these steps:
 
 (Note: after the environment is set up, the build will ping the device specified in the .env (dev_test_user and dev_test_device to verify it's working)
