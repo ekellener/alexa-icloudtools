@@ -25,7 +25,7 @@ Key dependencies:
  - [AWS Developer access](https://developer.amazon.com/home.html) to create an Alexa skill 
  - [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html) installed and configured with 
 
-If you have the above set up and want to do a quick start to deploy alexa-icloudtools, jump [here](http://#Quick-Start). Otherwise, continue on.
+If you have the above set up and want to do a quick start to deploy alexa-icloudtools, jump [here](#quick-start). Otherwise, continue on.
  
  
 ### Step 2 - Initial install
@@ -241,7 +241,7 @@ Now that the lambda function has been deployed, the Alexa skill needs to be set 
 
 
 
-### Quick start
+###Quick Start
 If you have Docker set up and want to spin up a full environment, including encrypted iCloud logins, follow these steps:
 
 (Note: after the environment is set up, the build will ping the device specified in the .env (dev_test_user and dev_test_device to verify it's working)
