@@ -1,5 +1,5 @@
 FROM node:4.4.7
-#rebuild: docker build   -f Dockerfile.awslambda -t alexa/awslambda .
+#rebuild: docker build   -f reference-files/Dockerfile.awslambda -t ekellener/awslambda .
 
 RUN useradd --user-group --create-home --shell /bin/false app &&\
   npm install --global npm@2.15.8
@@ -9,10 +9,11 @@ RUN apt-get update
 
 ## Added python-dev (some wierd error)
 RUN apt-get install -y curl python python-dev python-pip
-USER app
+
 
 #Prereq
 RUN pip install awscli
+USER app
 ENV HOME=/home/app
 WORKDIR $HOME
 USER root
