@@ -260,10 +260,12 @@ Now that the lambda function has been deployed, the Alexa skill needs to be set 
 ### Quick Start
 If you have Docker set up and want to spin up a full environment, including encrypted iCloud logins, follow these steps:
 
+
 (Note: after the environment is set up, the build will ping the device specified in the .env (dev_test_user and dev_test_device to verify it's working)
+Start by dropping into the ***alexa-icloudtools/deploy/docker*** folder.
 
 1. Set up .env file: Make a copy of the **deploy/docker/.env.sample** file (in the same directory) and name it **.env**. Now, populate it with the correct AWS ID key & secret, region, icloud user key and device type.
-2. Set up creds.dcr: Make a copy of the deploy/docker/config/creds.dcr.sample file, and add your icloud credentials.
-3. Set up dev.json: Make a copy of the **deploy/docker/dev.json.sample/customize or make any changes to the /deploy/docker/config/dev.json file (The defaults should work just fine).
+2. Set up creds.dcr: Make a copy of the **deploy/docker/config/creds.dcr.sample** file, and add your icloud credentials.
+3. Set up dev.json: Make a copy of the **deploy/docker/dev.json.sample/customize** or make any changes to the /deploy/docker/config/dev.json file (The defaults should work just fine).
 4. ```docker-compose build --no-cache```
-
+5. Now the lambda function is set up, complete [Step 5 - Set up Alexa Function](#step-5---set-up-alexa-function) to integrate with Alexa.
