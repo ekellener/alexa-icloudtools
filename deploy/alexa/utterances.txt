@@ -5,6 +5,10 @@ pingDevice I lost {FirstNames} {Device}
 pingDevice Help me find {FirstNames} {Device}
 pingDevice Send an alert to {FirstNames} {Device}
 
+getDeviceList what are {FirstNames} devices
+getDeviceList list {FirstNames} devices
+getDeviceList provide a list of {FirstNames} devices
+
 addReminder Remind {FirstNames} to {Reminder} at {TimeDue}
 addReminder Ask {FirstNames} to {Reminder} at {TimeDue}
 addReminder Tell {FirstNames} to {Reminder} at {TimeDue}

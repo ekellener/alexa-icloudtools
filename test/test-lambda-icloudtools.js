@@ -33,6 +33,8 @@ var stemMocks = "Willy's laptop";
 var MockAlexaRequest = require('../lib/mock-alexa-request');
 var mockFixtures = new MockAlexaRequest('./test/fixtures');
 var addReminderRequest = mockFixtures.load('alexa-event-addReminder.json');
+var startSessionRequest = mockFixtures.load('alexa-event-startSession.json');
+var getDeviceListRequest = mockFixtures.load('alexa-event-getDeviceList.json');
 var foundAlexaRequest = mockFixtures.load('alexa-event-pingDevice.json');
 
 var notfoundAlexaRequest = JSON.parse(JSON.stringify(foundAlexaRequest));
@@ -305,6 +307,96 @@ describe("Amazon Alexa/Echo Tests", function () {
 
     })
 
+    describe.skip("Full Integration loop test AddReminder ", function () {
+        this.timeout(80000);
+        var lambda = require('../lambda-icloudtools');
+
+        before(function (done) {
+            ctx = context();
+            speechResponse = null;
+            speechError = null;
+
+            // override to access real data. Ensure it matches the credentials format.
+            addReminderRequest.request.intent.slots["FirstNames"].value = "Erik's";
+
+            lambda.handler(addReminderRequest, ctx);
+            ctx.Promise
+                .then(function (resp) {
+                    speechResponse = resp;
+                    done();
+                })
+                .catch(function (err) {
+                    speechError = err;
+                    done();
+                });
+        });
+
+
+        it.skip('should have a speechlet response', function () {
+            expect(speechResponse.response).not.to.be.null
+        });
+
+    })
+
+    describe.skip("Full Integration loop startSession ", function () {
+        this.timeout(10000);
+        var lambda = require('../lambda-icloudtools');
+
+        before(function (done) {
+            ctx = context();
+            speechResponse = null;
+            speechError = null;
+
+
+            lambda.handler(startSessionRequest, ctx);
+            ctx.Promise
+                .then(function (resp) {
+                    speechResponse = resp;
+                    done();
+                })
+                .catch(function (err) {
+                    speechError = err;
+                    done();
+                });
+        });
+
+
+        it('should have a speechlet response', function () {
+            expect(speechResponse.response).not.to.be.null
+        });
+
+    })
+
+    describe("Full Integration loop test getDeviceList ", function () {
+        this.timeout(25000);
+        var lambda = require('../lambda-icloudtools');
+
+        before(function (done) {
+            ctx = context();
+            speechResponse = null;
+            speechError = null;
+
+            // override to access real data. Ensure it matches the credentials format.
+            foundAlexaRequest.request.intent.slots["FirstNames"].value = "Erik's";
+
+            lambda.handler(getDeviceListRequest, ctx);
+            ctx.Promise
+                .then(function (resp) {
+                    speechResponse = resp;
+                    done();
+                })
+                .catch(function (err) {
+                    speechError = err;
+                    done();
+                });
+        });
+
+
+        it('should have a speechlet response', function () {
+            expect(speechResponse.response).not.to.be.null
+        });
+
+    })
 
 
 

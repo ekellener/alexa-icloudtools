@@ -9,6 +9,12 @@
       "type": "AMAZON.US_FIRST_NAME"
     }]
   }, {
+    "intent": "getDeviceList",
+    "slots": [ {
+      "name": "FirstNames",
+      "type": "AMAZON.US_FIRST_NAME"
+    }]
+  }, {
     "intent": "addReminder",
     "slots": [{
       "name": "TimeDue",

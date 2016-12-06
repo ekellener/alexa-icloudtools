@@ -1,8 +1,5 @@
 var Alexa = require('alexa-app');
 var debug = require('debug')('lambda-findappledevice');
-//var ICloudConnection = require('appledevice');
-//var Credentials = require('credentials');
-//var AlexaResponseError = require('alexa-error');
 var Promise = require('bluebird');
 var _ = require('underscore');
 
@@ -20,11 +17,9 @@ app.pre = function (request, response, type) {
 
     if (conf == "production") {
         config = require('config-node')({env: conf});
-        //      iCloudTools = new ICloudTools(config);
     } else {
         // default to dev
-        config = require('config-node')({env: "dev"});
-        //       iCloudTools = new ICloudTools(config);
+        config = require('config-node')({env: "dev"});;
     }
 
     debug(JSON.stringify(config));
@@ -85,6 +80,29 @@ app.intent("pingDevice",
         return false;
     });
 
+app.intent("getDeviceList",
+    {
+        "utterances": _.pluck(_.filter(config.Alexa.interactionModel.utteranceTemplate,
+            function (utt) {
+                return utt.intent == "getDeviceList"
+            }
+        ), "template")
+    },
+    function (request, response) {
+
+        var intentRequest = {
+            FirstNames: request.slot("FirstNames"),
+        };
+
+        iCloudTools.getDeviceList(intentRequest)
+            .then(function (msg) {
+                response.say(msg)
+                    .send();
+
+            });
+
+        return false;
+    });
 
 //Primary Intent addReminder, hinting utterances from conf
 app.intent("addReminder",

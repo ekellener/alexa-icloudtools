@@ -1,0 +1,29 @@
+{
+  "session": {
+    "sessionId": "SessionId.id",
+    "application": {
+      "applicationId": "amzn1.ask.skill.id"
+    },
+    "attributes": {},
+    "user": {
+      "userId": "amzn1.ask.account.AEGR5id"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.id",
+    "locale": "en-US",
+    "timestamp": "2016-09-23T23:01:43Z",
+    "intent": {
+      "name": "getDeviceList",
+      "slots": {
+        "FirstNames": {
+          "name": "FirstNames",
+          "value": "Erik's"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

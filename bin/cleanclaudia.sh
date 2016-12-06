@@ -9,6 +9,7 @@ usage() {
 
 #Initialization of variables
 roleName="alexa-icloudtools-executor"
+awsFunction="alexa-icloudtools"
 
 #Clean up Claudia
 echo "***  Attempting to delete existing roles,policies, and aliases..(may see errors)."
@@ -25,7 +26,11 @@ for role in $roles; do
   aws iam delete-role --role-name $role
 done
 
-aws lambda delete-function --function-name alexa-icloudtools
+functions=$(aws lambda list-functions --query 'Functions[?FunctionName==`'$awsFunction'`].FunctionName' --output text)
+for fn in $functions; do
+  echo deleting function $functions
+  aws lambda delete-function --function-name $functions
+done
 
 
 echo "All done..."
