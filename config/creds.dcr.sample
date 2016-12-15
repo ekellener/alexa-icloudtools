@@ -1,7 +1,7 @@
 {
 	"icloud_logins": [
 	{
-		"key": "Willy",
+		"key": ["Willy","William","Billy","Bill"]
 	    "email": "Willy@Wonka.com",
 	    "password": "GoodDeedInAWearyWorld"
 	}

@@ -36,7 +36,7 @@ var credMocks = [
 var fullCredsMock = {
     "icloud_logins": [
         {
-            "key": "Willy",
+            "key": ["Willy's","Billy's","Willam's"] ,
             "email": "Willy@Wonka.com",
             "password": "GoodDeedInAWearyWorld"
         }
@@ -56,7 +56,7 @@ describe("Credentials Unit test", function () {
         };
         mockAdapter.icloud_logins =fullCredsMock.icloud_logins;
         credentials = new reqCredentials.Credentials(mockAdapter,AlexaResponseError);
-        stemMocks = fullCredsMock.icloud_logins[0].key;
+        stemMocks = fullCredsMock.icloud_logins[0].key[2];
 //    var txtAdapter = new reqCredentials.Adapters.plainTxtCredentials({credsFile: "creds.dcr"});
 //    var kmsAdapter = new reqCredentials.Adapters.kmsCredentials({awsRegion: "us-east-1",encryptedFile: "creds.base64"});
     })
@@ -72,7 +72,7 @@ describe("Credentials Unit test", function () {
         // test unable to find state
         stemMocks = "Nada's";
         return expect(credentials.lookup(stemMocks))
-            .to.eventually.be.rejectedWith(AlexaResponseError, "I was unable to find the configuration for " + stemMocks+ " Device");
+            .to.eventually.be.rejectedWith(AlexaResponseError, "Sorry, I was unable to find the configuration for any of " + stemMocks+ " Devices");
     }));
 
 
@@ -101,7 +101,7 @@ describe("Credentials encryption testing", function () {
 
     beforeEach(function(){
 
-        stemMocks = fullCredsMock.icloud_logins[0].key;
+        stemMocks = fullCredsMock.icloud_logins[0].key[2];
 
         // Stub out fs readFile (bypass file IO)
         reqCredentials = rewire('../lib/credentials/credentials.js');

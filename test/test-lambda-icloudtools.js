@@ -21,7 +21,7 @@ chai.use(chaiAsPromised);
 
 var credMocks = [
     {
-        "key": "Willy's",
+        "key": ["Willy's","Billy's","Willam's"],
         "email": "Willy@Wonka.com",
         "password": "GoodDeedInAWearyWorld"
     }];
@@ -273,6 +273,8 @@ describe("Amazon Alexa/Echo Tests", function () {
 
     });
     // LIVE TEST - Disabled by default, unless you want an actual live test to ping your device each time.
+
+
     describe.skip("Full Integration loop test PingDevice ", function () {
         this.timeout(15000);
      var lambda = require('../lambda-icloudtools');
@@ -284,7 +286,7 @@ describe("Amazon Alexa/Echo Tests", function () {
 
 
          // override to access real data. Ensure it matches the credentials format.
-         foundAlexaRequest.request.intent.slots["FirstNames"].value = "Erik's";
+         foundAlexaRequest.request.intent.slots["FirstNames"].value = "Eric's";
          foundAlexaRequest.request.intent.slots["Device"].value = "Phone";
 
 
@@ -301,7 +303,7 @@ describe("Amazon Alexa/Echo Tests", function () {
      });
 
 
-        it.skip('should have a speechlet response', function () {
+        it('should have a speechlet response', function () {
             expect(speechResponse.response).not.to.be.null
         });
 
@@ -317,7 +319,7 @@ describe("Amazon Alexa/Echo Tests", function () {
             speechError = null;
 
             // override to access real data. Ensure it matches the credentials format.
-            addReminderRequest.request.intent.slots["FirstNames"].value = "Erik's";
+            addReminderRequest.request.intent.slots["FirstNames"].value = "Eric's";
 
             lambda.handler(addReminderRequest, ctx);
             ctx.Promise
@@ -367,7 +369,7 @@ describe("Amazon Alexa/Echo Tests", function () {
 
     })
 
-    describe("Full Integration loop test getDeviceList ", function () {
+    describe.skip("Full Integration loop test getDeviceList ", function () {
         this.timeout(25000);
         var lambda = require('../lambda-icloudtools');
 
@@ -377,7 +379,7 @@ describe("Amazon Alexa/Echo Tests", function () {
             speechError = null;
 
             // override to access real data. Ensure it matches the credentials format.
-            foundAlexaRequest.request.intent.slots["FirstNames"].value = "Erik's";
+            foundAlexaRequest.request.intent.slots["FirstNames"].value = "Eric's";
 
             lambda.handler(getDeviceListRequest, ctx);
             ctx.Promise

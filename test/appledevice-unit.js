@@ -24,18 +24,18 @@ var revertClearCookiesFile;
 
 var credMocks = [
     {
-        "key": "Willy's",
+        "key": ["Willy's","Billy's","Willam's"],
         "email": "Willy@Wonka.com",
         "password": "GoodDeedInAWearyWorld"
     }]
 
 
-var stemMocks = "Willy's laptop";
+var stemMocks = {name: "Willy's", device: "laptop"};
 
 
 var iCloudDeviceMock = [];
 iCloudDeviceMock.push({
-    "name": stemMocks,
+    "name": stemMocks.name+ " "+stemMocks.device,
     "id": "vLq76K6u20yv6o4EBeVotz2HozToy50JQacry5VKvRYsMKTP4lPmGw=="
 });
 
@@ -45,6 +45,7 @@ var fsMock = {
         return undefined;
     }
 };
+
 
 
 describe("Apple Device Unit Tests", function () {
@@ -59,13 +60,15 @@ describe("Apple Device Unit Tests", function () {
         var addReminderStub;
         var getDevicesStub;
 
+
         before(function () {
 
             // Set up Stubs, Mocks and Rewires
             revertClearCookiesFile = RewireICloud.__set__("fs", fsMock);
             rewireICloudConn = new RewireICloud(credMocks[0], "blah", AlexaResponseError);
             requireiCloudConn = new RequireICloud(credMocks[0], "blah", AlexaResponseError);
-
+            requireiCloudConn.acct = credMocks[0];
+            requireiCloudConn.acct.stem = {FirsNames: stemMocks.name};
             _iCloudAsyncMock = sinon.mock(requireiCloudConn._iCloudAsync);
             getDevicesStub = sinon.stub(requireiCloudConn._iCloudAsync, 'getDevicesAsync');
             getRemindersStub = sinon.stub(requireiCloudConn._iCloudAsync, 'getRemindersAsync');
@@ -85,9 +88,19 @@ describe("Apple Device Unit Tests", function () {
         });
 
 
+        it("getDeviceList", sinon.test(function () {
+
+            getDevicesStub
+                .returns(Promise.resolve(iCloudDeviceMock));
+
+            expect(requireiCloudConn.getDeviceList(stemMocks.name))
+                .to.eventually.equal(iCloudDeviceMock[0]);
+
+            _iCloudAsyncMock.verify();
+        }));
+
         it("Find", sinon.test(function () {
 
-            //     _iCloudAsyncMock.expects('getDevicesAsync')
             getDevicesStub
                 .returns(Promise.resolve(iCloudDeviceMock));
 

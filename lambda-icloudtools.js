@@ -96,9 +96,9 @@ app.intent("getDeviceList",
 
         iCloudTools.getDeviceList(intentRequest)
             .then(function (msg) {
+                response.card({type: "Simple",title: "List of "+intentRequest.FirstNames+" devices",content: msg});
                 response.say(msg)
                     .send();
-
             });
 
         return false;
