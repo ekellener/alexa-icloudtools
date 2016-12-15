@@ -82,13 +82,14 @@ References and changing device names:
 __**Configuring the app with Credentials**__
 
 In order to access iCloud's network to reach devices, an account username (.e.g sometimes referred to as the Apple ID) and password is required. 
-Credentials are stored in a JSON structure. The "key" is used to lookup a specific account (generally first name) of the owner of iCloud account. As a note, it's recommend to use iCloud's 2FA and generate a [application specific password](https://support.apple.com/en-us/HT204397). However, it will work with your account's standard iCloud password.
+Credentials are stored in a JSON structure. The "key" is used to lookup a specific account (generally first name) of the owner of iCloud account. The field is an array to accommodate different spellings of the name. All variations of the key will be used to try to match a login and device name. As a note, it's recommend to use iCloud's 2FA and generate a [application specific password](https://support.apple.com/en-us/HT204397). However, it will work with your account's standard iCloud password.
  
 Here's an example of a Credentials JSON structure. ```/config/creds.dcr.sample```
 ```json
 {
 	"icloud_logins": [
-	{   "key": "Willy",
+	{
+		"key": ["Willy","William","Billy","Bill"]
 	    "email": "Willy@Wonka.com",
 	    "password": "GoodDeedInAWearyWorld"
 	}
