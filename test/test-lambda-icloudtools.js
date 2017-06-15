@@ -17,14 +17,11 @@ var lambdaICloudTools = rewire('../lambda-icloudtools.js');
 var expect = chai.expect;
 chai.use(chaiAsPromised);
 
+
+var sinon = require('sinon');
+
 // List of Stubs - eventually assigned and called during cleanup
 
-var credMocks = [
-    {
-        "key": ["Willy's","Billy's","Willam's"],
-        "email": "Willy@Wonka.com",
-        "password": "GoodDeedInAWearyWorld"
-    }];
 
 var stemMocks = "Willy's laptop";
 
@@ -85,7 +82,7 @@ describe("Amazon Alexa/Echo Tests", function () {
         });
 
         it("should have a spoken response Welcome Response)", function () {
-            var speakregex = new RegExp('\<(\/)*speak\>', 'g')
+            var speakregex = new RegExp('\<(\/)*speak\>', 'g');
             var stripspeak = speechResponse.response.outputSpeech.ssml.replace(speakregex, '');
             var alexaresponse = config.Alexa.introMessage;
 
@@ -137,18 +134,18 @@ describe("Amazon Alexa/Echo Tests", function () {
         });
 
         it('should have a speechlet response', function () {
-            expect(speechResponse.response).not.to.be.null
+            expect(speechResponse.response).not.to.be.null;
         });
 
         it('should have a spoken response (sent an alert)', function () {
-            var speakregex = new RegExp('\<(\/)*speak\>', 'g')
+            var speakregex = new RegExp('\<(\/)*speak\>', 'g');
             var stripspeak = speechResponse.response.outputSpeech.ssml.replace(speakregex, '');
             var alexaresponse = "An alert has been sent to " + stemMocks;
             expect(alexaresponse).to.equal(stripspeak);
         });
 
         it("should end the alexa session", function () {
-            expect(speechResponse.response.shouldEndSession).not.to.be.null
+            expect(speechResponse.response.shouldEndSession).not.to.be.null;
             expect(speechResponse.response.shouldEndSession).to.be.true
         });
 
@@ -200,14 +197,14 @@ describe("Amazon Alexa/Echo Tests", function () {
         });
 
         it('should have a spoken response (sent an alert)', function () {
-            var speakregex = new RegExp('\<(\/)*speak\>', 'g')
+            var speakregex = new RegExp('\<(\/)*speak\>', 'g');
             var stripspeak = speechResponse.response.outputSpeech.ssml.replace(speakregex, '');
             var alexaresponse = "pick up the groceries has been added";
             expect(alexaresponse).to.equal(stripspeak);
         });
 
         it("should end the alexa session", function () {
-            expect(speechResponse.response.shouldEndSession).not.to.be.null
+            expect(speechResponse.response.shouldEndSession).not.to.be.null;
             expect(speechResponse.response.shouldEndSession).to.be.true
         });
 
@@ -260,61 +257,103 @@ describe("Amazon Alexa/Echo Tests", function () {
         });
 
         it('should have a spoken response (sent an alert)', function () {
-            var speakregex = new RegExp('\<(\/)*speak\>', 'g')
+            var speakregex = new RegExp('\<(\/)*speak\>', 'g');
             var stripspeak = speechResponse.response.outputSpeech.ssml.replace(speakregex, '');
             var alexaresponse = "I'm sorry I was unable to reach the requested device. Please Try again later";
             expect(alexaresponse).to.equal(stripspeak);
         });
 
         it("should end the alexa session", function () {
-            expect(speechResponse.response.shouldEndSession).not.to.be.null
+            expect(speechResponse.response.shouldEndSession).not.to.be.null;
             expect(speechResponse.response.shouldEndSession).to.be.true
         });
 
     });
+
+
+});
+
+
+describe.skip("Amazon Alexa/Echo Integration Tests", function () {
     // LIVE TEST - Disabled by default, unless you want an actual live test to ping your device each time.
 
+    describe.skip("Full Integration loop test getDeviceList ", sinon.test(function () {
+        this.timeout(30000);
+        var lambda = require('../lambda-icloudtools');
 
-    describe.skip("Full Integration loop test PingDevice ", function () {
-        this.timeout(15000);
-     var lambda = require('../lambda-icloudtools');
+        before(function (done) {
+            ctx = context({
+                timeout: 300
+            });
+            speechResponse = null;
+            speechError = null;
 
-     before(function (done) {
-         ctx = context();
-         speechResponse = null;
-         speechError = null;
+            // override to access real data. Ensure it matches the credentials format.
+            getDeviceListRequest.request.intent.slots["FirstNames"].value = "Erik's";
 
-
-         // override to access real data. Ensure it matches the credentials format.
-         foundAlexaRequest.request.intent.slots["FirstNames"].value = "Eric's";
-         foundAlexaRequest.request.intent.slots["Device"].value = "Phone";
-
-
-         lambda.handler(foundAlexaRequest, ctx);
-         ctx.Promise
-             .then(function (resp) {
-                 speechResponse = resp;
-                 done();
-             })
-             .catch(function (err) {
-                 speechError = err;
-                 done();
-             });
-     });
+            lambda.handler(getDeviceListRequest, ctx);
+            ctx.Promise
+                .then(function (resp) {
+                    speechResponse = resp;
+                    done();
+                })
+                .catch(function (err) {
+                    speechError = err;
+                    done();
+                });
+        });
 
 
         it('should have a speechlet response', function () {
-            expect(speechResponse.response).not.to.be.null
+            return expect(speechResponse.response).not.to.be.null
         });
 
-    })
+    }));
+
+    describe.skip("Full Integration loop test PingDevice ", sinon.test(function () {
+        this.timeout(99000);
+        var lambda = require('../lambda-icloudtools');
+
+        before(function (done) {
+            ctx = context({
+                timeout: 300
+            });
+            speechResponse = null;
+            speechError = null;
+
+
+            // override to access real data. Ensure it matches the credentials format.
+            foundAlexaRequest.request.intent.slots["FirstNames"].value = "Eric";
+            foundAlexaRequest.request.intent.slots["Device"].value = "Phone";
+
+
+            lambda.handler(foundAlexaRequest, ctx);
+            ctx.Promise
+                .then(function (resp) {
+                    speechResponse = resp;
+                    done();
+                })
+                .catch(function (err) {
+                    speechError = err;
+                    done();
+                });
+        });
+
+
+        it('should have a speechlet response', function () {
+            return expect(speechResponse).not.to.be.null;
+        });
+
+    }));
 
     describe.skip("Full Integration loop test AddReminder ", function () {
         this.timeout(80000);
         var lambda = require('../lambda-icloudtools');
 
         before(function (done) {
-            ctx = context();
+            ctx = context({
+                timeout: 300
+            });
             speechResponse = null;
             speechError = null;
 
@@ -338,7 +377,7 @@ describe("Amazon Alexa/Echo Tests", function () {
             expect(speechResponse.response).not.to.be.null
         });
 
-    })
+    });
 
     describe.skip("Full Integration loop startSession ", function () {
         this.timeout(10000);
@@ -369,39 +408,12 @@ describe("Amazon Alexa/Echo Tests", function () {
 
     })
 
-    describe.skip("Full Integration loop test getDeviceList ", function () {
-        this.timeout(25000);
-        var lambda = require('../lambda-icloudtools');
-
-        before(function (done) {
-            ctx = context();
-            speechResponse = null;
-            speechError = null;
-
-            // override to access real data. Ensure it matches the credentials format.
-            foundAlexaRequest.request.intent.slots["FirstNames"].value = "Eric's";
-
-            lambda.handler(getDeviceListRequest, ctx);
-            ctx.Promise
-                .then(function (resp) {
-                    speechResponse = resp;
-                    done();
-                })
-                .catch(function (err) {
-                    speechError = err;
-                    done();
-                });
-        });
-
-
-        it('should have a speechlet response', function () {
-            expect(speechResponse.response).not.to.be.null
-        });
-
-    })
-
-
-
 });
+
+
+
+
+
+
 
 

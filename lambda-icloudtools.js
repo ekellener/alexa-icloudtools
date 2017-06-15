@@ -11,7 +11,7 @@ var iCloudTools = new ICloudTools(config);
 var app = new Alexa.app();
 
 app.pre = function (request, response, type) {
-    debug(JSON.stringify(request));
+    debug("request: "+JSON.stringify(request));
     // extract which configuration should be invoked.
     var conf = app.handler.arguments[1].invokedFunctionArn.replace(/.*:/g, '');
 
@@ -19,7 +19,7 @@ app.pre = function (request, response, type) {
         config = require('config-node')({env: conf});
     } else {
         // default to dev
-        config = require('config-node')({env: "dev"});;
+        config = require('config-node')({env: "dev"});
     }
 
     debug(JSON.stringify(config));
@@ -47,6 +47,7 @@ app.intent("AMAZON.StopIntent", function (request, response) {
     response.say(config.Alexa.stopMessage)
         .shouldEndSession(true)
         .send();
+
 });
 
 // Register Cancel
@@ -91,7 +92,7 @@ app.intent("getDeviceList",
     function (request, response) {
 
         var intentRequest = {
-            FirstNames: request.slot("FirstNames"),
+            FirstNames: request.slot("FirstNames")
         };
 
         iCloudTools.getDeviceList(intentRequest)
